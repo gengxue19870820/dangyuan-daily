@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>党员每日要闻 · 开卷即读</title>
+<style>
+:root{
+  --red:#b81c22; --red-deep:#8a1015; --red-soft:#fdecec;
+  --gold:#b8912f; --ink:#2b2b2b; --ink-soft:#5a5a5a;
+  --line:#e9dcdc; --paper:#fffdfb;
+  --c-politics:#b81c22; --c-economy:#1f6b8a; --c-culture:#8a6d1f; --c-society:#3f7d4e; --c-tech:#6a4a8a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei","PingFang SC","SimSun",serif;background:#f4f1ec;color:var(--ink);line-height:1.8;-webkit-font-smoothing:antialiased}
+
+header{background:linear-gradient(135deg,var(--red-deep) 0%,var(--red) 55%,var(--red-deep) 100%);color:#fff;padding:30px 20px 24px;text-align:center;position:relative;overflow:hidden;box-shadow:0 6px 24px rgba(138,16,21,.28)}
+header::before,header::after{content:"";position:absolute;border:1px solid rgba(255,255,255,.12);border-radius:50%}
+header::before{width:320px;height:320px;top:-160px;left:-90px}
+header::after{width:260px;height:260px;bottom:-170px;right:-70px}
+.emblem{font-size:36px;line-height:1;margin-bottom:6px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.25))}
+header h1{font-size:28px;letter-spacing:4px;margin-bottom:8px;text-shadow:2px 2px 6px rgba(0,0,0,.25);position:relative}
+.header-date{font-size:14px;opacity:.92;letter-spacing:1px;position:relative}
+.update-badge{display:inline-block;margin-top:10px;padding:4px 14px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:20px;font-size:12px;letter-spacing:1px;position:relative}
+.update-badge b{color:#f6dfa8}
+
+.wrap{max-width:1000px;margin:0 auto;padding:22px 18px 60px}
+
+/* 概览统计 */
+.overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:20px}
+.ov-card{background:var(--paper);border-radius:12px;padding:14px;text-align:center;box-shadow:0 3px 14px rgba(0,0,0,.06);border-top:3px solid var(--red)}
+.ov-card .num{font-size:26px;font-weight:bold;color:var(--red)}
+.ov-card .lbl{font-size:12px;color:var(--ink-soft);margin-top:2px}
+.ov-card.c2{border-top-color:var(--c-economy)}.ov-card.c2 .num{color:var(--c-economy)}
+.ov-card.c3{border-top-color:var(--c-culture)}.ov-card.c3 .num{color:var(--c-culture)}
+.ov-card.c4{border-top-color:var(--c-society)}.ov-card.c4 .num{color:var(--c-society)}
+.ov-card.c5{border-top-color:var(--c-tech)}.ov-card.c5 .num{color:var(--c-tech)}
+
+/* 导读 */
+.brief{background:var(--paper);border-radius:14px;padding:16px 22px;margin-bottom:18px;box-shadow:0 3px 16px rgba(0,0,0,.06);border-left:5px solid var(--gold)}
+.brief b{color:var(--red)}
+.brief .hint{font-size:12px;color:#999}
+
+/* 锚点导航 */
+.navbar{position:sticky;top:0;z-index:20;background:rgba(255,253,251,.96);backdrop-filter:blur(6px);border-radius:12px;padding:8px;box-shadow:0 3px 14px rgba(0,0,0,.08);margin-bottom:22px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center;border:1px solid var(--line)}
+.navbar a{padding:7px 15px;border-radius:20px;text-decoration:none;font-size:13px;color:var(--ink-soft);transition:.2s;white-space:nowrap}
+.navbar a:hover{background:var(--red-soft);color:var(--red)}
+.navbar a.n-politics:hover{background:#fdecec;color:var(--c-politics)}
+.navbar a.n-economy:hover{background:#e6f2f7;color:var(--c-economy)}
+.navbar a.n-culture:hover{background:#f8f2df;color:var(--c-culture)}
+.navbar a.n-society:hover{background:#e9f4ec;color:var(--c-society)}
+.navbar a.n-tech:hover{background:#f0eafa;color:var(--c-tech)}
+
+/* 板块 */
+.section{margin-bottom:34px;scroll-margin-top:70px}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--line)}
+.sec-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;flex:none}
+.sec-head h2{font-size:21px;letter-spacing:1px}
+.sec-head .sec-en{font-size:11px;color:#aaa;letter-spacing:2px;text-transform:uppercase}
+.sec-head .sec-count{margin-left:auto;font-size:12px;color:#999}
+.s-politics .sec-icon{background:var(--c-politics)}.s-politics h2{color:var(--c-politics)}
+.s-economy .sec-icon{background:var(--c-economy)}.s-economy h2{color:var(--c-economy)}
+.s-culture .sec-icon{background:var(--c-culture)}.s-culture h2{color:var(--c-culture)}
+.s-society .sec-icon{background:var(--c-society)}.s-society h2{color:var(--c-society)}
+.s-tech .sec-icon{background:var(--c-tech)}.s-tech h2{color:var(--c-tech)}
+.sec-sub{font-size:13px;color:#888;margin:-8px 0 16px}
+
+/* 新闻卡片 */
+.news{background:var(--paper);border-radius:14px;box-shadow:0 3px 16px rgba(0,0,0,.06);margin-bottom:14px;padding:18px 22px;border-left:4px solid var(--line);transition:.2s;position:relative}
+.s-politics .news{border-left-color:var(--c-politics)}
+.s-economy .news{border-left-color:var(--c-economy)}
+.s-culture .news{border-left-color:var(--c-culture)}
+.s-society .news{border-left-color:var(--c-society)}
+.s-tech .news{border-left-color:var(--c-tech)}
+.news:hover{box-shadow:0 6px 22px rgba(0,0,0,.1);transform:translateY(-1px)}
+.news.read{opacity:.62}
+.n-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.n-idx{font-size:12px;color:#ccc;font-weight:bold;flex:none}
+.n-title{font-size:17px;font-weight:bold;color:var(--ink);line-height:1.55;flex:1;min-width:200px}
+.n-source{font-size:11px;color:#fff;background:#999;padding:2px 9px;border-radius:5px;flex:none;font-weight:normal}
+.s-politics .n-source{background:var(--c-politics)}
+.s-economy .n-source{background:var(--c-economy)}
+.s-culture .n-source{background:var(--c-culture)}
+.s-society .n-source{background:var(--c-society)}
+.s-tech .n-source{background:var(--c-tech)}
+.n-summary{font-size:14px;color:var(--ink-soft);line-height:1.9;margin-bottom:12px}
+.n-insight{background:var(--gold-soft);border-radius:9px;padding:11px 15px;font-size:13.5px;color:#6a5320;line-height:1.8;margin-bottom:10px}
+.n-insight b{color:#8a6d1f}
+.n-foot{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding-top:8px;border-top:1px dashed var(--line)}
+.n-foot a{font-size:12px;color:var(--red);text-decoration:none}
+.n-foot a:hover{text-decoration:underline}
+.read-btn{margin-left:auto;padding:5px 14px;border:1px solid #ccc;background:#fff;color:#888;border-radius:18px;cursor:pointer;font-size:12px;font-family:inherit;transition:.2s}
+.read-btn.done{background:#e7f5ec;color:#2e8b57;border-color:#a8d9ba}
+
+/* 金句 */
+.quote-box{margin:34px 0;background:linear-gradient(135deg,#fff9ec,#fffdf8);border:1px solid #ead9a8;border-radius:14px;padding:26px 30px;text-align:center;box-shadow:0 3px 16px rgba(0,0,0,.05)}
+.quote-mark{font-size:36px;color:var(--gold);line-height:.8;opacity:.6}
+.quote-text{font-size:22px;color:#6a4a1a;margin:10px 0;letter-spacing:2px;line-height:1.7}
+.quote-from{font-size:12px;color:#a88b4a}
+
+/* 笔记 */
+.notes{background:var(--paper);border-radius:14px;padding:20px 22px;box-shadow:0 3px 16px rgba(0,0,0,.06);border:1px solid var(--line)}
+.notes h3{font-size:17px;color:var(--red-deep);margin-bottom:12px}
+.notes textarea{width:100%;height:96px;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:14px;font-family:inherit;resize:vertical;margin-bottom:10px}
+.notes textarea:focus{outline:none;border-color:var(--red)}
+.note-item{background:#fffaf5;border-radius:8px;padding:12px 14px;margin-top:10px;position:relative;border-left:3px solid var(--gold)}
+.note-item .nd{font-size:11px;color:#aaa;margin-bottom:4px}
+.note-item .nt{font-size:14px;color:#444;white-space:pre-wrap;word-break:break-word}
+.note-del{position:absolute;top:8px;right:10px;border:none;background:none;color:#ccc;cursor:pointer;font-size:17px}
+.note-del:hover{color:var(--red)}
+
+/* 进度 */
+.progress-wrap{background:var(--paper);border-radius:14px;padding:14px 22px;box-shadow:0 3px 16px rgba(0,0,0,.06);margin-bottom:20px;border:1px solid var(--line)}
+.progress-top{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-soft);margin-bottom:8px}
+.progress-bar{height:10px;background:#eee;border-radius:5px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--red-deep));border-radius:5px;transition:width .5s}
+
+footer{background:var(--red-deep);color:rgba(255,255,255,.85);text-align:center;padding:22px 18px;margin-top:40px}
+footer p{font-size:13px;margin-bottom:5px}
+footer .f-quote{color:#f0d99a;font-style:italic;margin-top:8px}
+footer .f-hint{font-size:11px;opacity:.7;margin-top:10px;line-height:1.7}
+
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--red-deep);color:#fff;padding:12px 24px;border-radius:24px;font-size:14px;box-shadow:0 6px 22px rgba(0,0,0,.25);transition:.3s;opacity:0;z-index:99}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+@media(max-width:640px){
+  header h1{font-size:21px;letter-spacing:2px}
+  .news{padding:15px 16px}
+  .n-title{font-size:16px}
+  .quote-text{font-size:17px}
+}
+@media print{
+  body{background:#fff}
+  header,.navbar,.read-btn,.note-del,.toast,.notes textarea{display:none!important}
+  .news{box-shadow:none;border:1px solid #ddd;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="emblem">✦</div>
+  <h1>党员每日要闻</h1>
+  <div class="header-date" id="headerDate"></div>
+  <div class="update-badge">权威媒体要闻 · 更新于 <b id="updateDate"></b></div>
+</header>
+
+<div class="wrap">
+
+  <div class="overview">
+    <div class="ov-card"><div class="num" id="cntAll">0</div><div class="lbl">今日要闻</div></div>
+    <div class="ov-card c2"><div class="num" id="cntPolitics">0</div><div class="lbl">政治</div></div>
+    <div class="ov-card c3"><div class="num" id="cntEconomy">0</div><div class="lbl">经济</div></div>
+    <div class="ov-card c4"><div class="num" id="cntCulture">0</div><div class="lbl">文化</div></div>
+    <div class="ov-card c5"><div class="num" id="cntTech">0</div><div class="lbl">科技前沿</div></div>
+  </div>
+
+  <div class="brief">
+    <b>今日导读　</b>Opening即读——政治看方向、经济看发展、文化看自信、社会看民生、科技看前沿。每条要闻附「学习视角」，帮您在阅读中涵养党性、联系教学。<br>
+    <span class="hint">全部内容依据新华社、人民日报、人民网等权威媒体今日公开报道整理，点击标题下方可前往原文。</span>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-top"><span>今日阅读进度</span><span id="progressText">0 / 0 条</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <nav class="navbar">
+    <a href="#politics" class="n-politics">▸ 政治</a>
+    <a href="#economy" class="n-economy">▸ 经济</a>
+    <a href="#culture" class="n-culture">▸ 文化</a>
+    <a href="#society" class="n-society">▸ 社会</a>
+    <a href="#tech" class="n-tech">▸ 科技前沿</a>
+    <a href="#notes">▸ 学习心得</a>
+    <a href="#summary">▸ 今日之所学</a>
+  </nav>
+
+  <section id="politics" class="section s-politics">
+    <div class="sec-head"><div class="sec-icon">政</div><div><h2>政治 · 党建</h2><div class="sec-en">Politics & Party Building</div></div><span class="sec-count" id="secCountPolitics"></span></div>
+    <div id="list-politics"></div>
+  </section>
+
+  <section id="economy" class="section s-economy">
+    <div class="sec-head"><div class="sec-icon">经</div><div><h2>经济 · 发展</h2><div class="sec-en">Economy & Development</div></div><span class="sec-count" id="secCountEconomy"></span></div>
+    <div id="list-economy"></div>
+  </section>
+
+  <section id="culture" class="section s-culture">
+    <div class="sec-head"><div class="sec-icon">文</div><div><h2>文化 · 自信</h2><div class="sec-en">Culture & Confidence</div></div><span class="sec-count" id="secCountCulture"></span></div>
+    <div id="list-culture"></div>
+  </section>
+
+  <section id="society" class="section s-society">
+    <div class="sec-head"><div class="sec-icon">社</div><div><h2>社会 · 民生</h2><div class="sec-en">Society & Livelihood</div></div><span class="sec-count" id="secCountSociety"></span></div>
+    <div id="list-society"></div>
+  </section>
+
+  <section id="tech" class="section s-tech">
+    <div class="sec-head"><div class="sec-icon">科</div><div><h2>科技前沿 · 理综视野</h2><div class="sec-en">Science & Technology Frontier</div></div><span class="sec-count" id="secCountTech"></span></div>
+    <div class="sec-sub">专为初高中理综党员教师设置——把国家科技大事变成物理、化学、生物、信息科技课堂上的鲜活素材。</div>
+    <div id="list-tech"></div>
+  </section>
+
+  <div class="quote-box">
+    <div class="quote-mark">“</div>
+    <div class="quote-text" id="quoteText"></div>
+    <div class="quote-from" id="quoteFrom"></div>
+  </div>
+
+  <section id="notes" class="section">
+    <div class="sec-head"><div class="sec-icon" style="background:#666">记</div><div><h2 style="color:#555">学习心得</h2><div class="sec-en">My Learning Notes</div></div></div>
+    <div class="notes">
+      <h3>写下今天的阅读体会</h3>
+      <textarea id="noteInput" placeholder="可摘抄要闻要点、记录结合教学的思考……（保存在本机）"></textarea><br>
+      <button class="btn" style="padding:8px 20px;border:none;border-radius:8px;background:var(--red);color:#fff;cursor:pointer;font-size:14px;font-family:inherit" onclick="saveNote()">保存心得</button>
+      <div id="notesList"></div>
+    </div>
+  </section>
+
+  <section id="summary" class="section">
+    <div class="sec-head"><div class="sec-icon" style="background:#8a1015">结</div><div><h2 style="color:#8a1015">今日之所学</h2><div class="sec-en">Daily Learning Summary</div></div></div>
+    <div class="sum-box">
+      <div class="sum-date" id="sumDate"></div>
+      <div class="sum-stats" id="sumStats"></div>
+      <div id="sumList"></div>
+      <div class="sum-input-area">
+        <h3 class="sum-h3">✍️ 一句话总结：今天我学到了什么？</h3>
+        <textarea id="sumInput" placeholder="例如：今天读到工业机器人产量增长26%，我想到可以在物理课讲自动化控制……（按日期保存，次日可回看）"></textarea>
+        <div class="sum-btns">
+          <button class="sum-btn primary" onclick="saveSummary()">保存今日总结</button>
+          <button class="sum-btn" onclick="copySummary()">复制总结全文</button>
+          <button class="sum-btn ghost" onclick="toggleHistory()">历史总结 ▾</button>
+        </div>
+        <div class="sum-saved" id="sumSaved"></div>
+      </div>
+      <div id="sumHistory" class="sum-history" style="display:none"></div>
+    </div>
+  </section>
+
+  <style>
+    .sum-box{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:0 3px 16px rgba(0,0,0,.05)}
+    .sum-date{font-size:13px;color:var(--red-deep);letter-spacing:1px;margin-bottom:8px}
+    .sum-stats{font-size:14px;color:var(--ink-soft);background:var(--red-soft);border-radius:8px;padding:8px 12px;margin-bottom:12px}
+    .sum-item{border-left:3px solid var(--gold);background:#faf3e0;border-radius:0 8px 8px 0;padding:8px 12px;margin-bottom:8px;font-size:14px}
+    .sum-item b{color:var(--red-deep)}
+    .sum-item .si-insight{color:var(--ink-soft);font-size:13px;margin-top:2px}
+    .sum-h3{font-size:15px;color:var(--ink);margin:14px 0 6px}
+    .sum-input-area textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:14px;font-family:inherit;line-height:1.7;resize:vertical;outline:none}
+    .sum-input-area textarea:focus{border-color:var(--red)}
+    .sum-btns{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+    .sum-btn{padding:8px 18px;border:none;border-radius:8px;background:var(--gold);color:#fff;cursor:pointer;font-size:14px;font-family:inherit}
+    .sum-btn.primary{background:var(--red)}
+    .sum-btn.ghost{background:#fff;color:var(--red);border:1px solid var(--red)}
+    .sum-saved{font-size:13px;color:#1a7a3c;margin-top:8px;min-height:18px}
+    .sum-history{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
+    .sum-hist-item{background:#f8f5f0;border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:14px}
+    .sum-hist-item .shd{font-size:12px;color:var(--red-deep);margin-bottom:3px}
+    .sum-empty{font-size:14px;color:var(--ink-soft)}
+  </style>
+
+</div>
+
+<footer>
+  <p>党员每日要闻 · 开卷即读　|　面向初高中理综党员教师的每日学习资源</p>
+  <p class="f-quote">"风声雨声读书声，声声入耳；家事国事天下事，事事关心" —— 顾宪成</p>
+  <p class="f-hint">新闻标题与摘要依据新华社、人民日报、人民网等权威媒体今日公开报道整理，"学习视角"为编者撰写的学习引导。<br>建议每日阅读 15–20 分钟 · 每日 07:30 自动抓取更新要闻</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===NEWS_DATA_START=== */
+var NEWS_DATA = {
+  updateDate: "2026-11-24",
+  politics: [
+    {title:"我国东部和东北地区持之以恒推进全面从严治党观察",source:"新华社",
+     summary:"新华社刊发观察文章，梳理东部和东北地区持之以恒推进全面从严治党、把严的基调长期坚持下去的实践做法，展现各地在纪律教育、监督执纪和作风建设上的持续用力。",
+     insight:"全面从严治党是“四个全面”战略布局的重要组成部分。作为党员教师，要把纪律规矩内化于心、外化于行，在教书育人中坚守师德底线。",
+     url:"https://www.xinhuanet.com/"},
+    {title:"人民日报评论员观察：坚持依规治党，用制度管权管事管人",source:"人民网",
+     summary:"评论指出，要坚持依规治党，完善党内法规制度体系，用制度管权管事管人，把权力关进制度的笼子，让制度真正成为党员干部的行为准则和刚性约束。",
+     insight:"制度治党、依规治党是全面从严治党的治本之策。可结合学校治理、班级管理，思考“依规”与“立德”如何相辅相成。",
+     url:"https://www.people.com.cn/"},
+    {title:"“总书记的人民情怀”丨培养更多高技能人才和大国工匠",source:"人民网",
+     summary:"报道梳理习近平总书记对技能人才的关心与嘱托，强调要大力弘扬劳模精神、劳动精神、工匠精神，培养更多高技能人才和大国工匠，为高质量发展提供坚实人才支撑。",
+     insight:"这与理综教育高度契合——培养学生的科学素养、实验能力和工程思维，正是为“大国工匠”储备源头活水。",
+     url:"https://www.people.com.cn/"},
+    {title:"红厅论坛“读懂中国共产党二十届五中全会”在京举行",source:"新华网",
+     summary:"红厅论坛聚焦解读党的二十届五中全会精神，中外嘉宾围绕中国发展规划、政策方向等展开深入交流，帮助国际社会理解中国共产党的执政理念与发展思路。",
+     insight:"深入学习领会五中全会精神，是当前党员理论学习的重点。要把国家“十五五”蓝图讲给学生听，增强他们的制度自信。",
+     url:"https://www.xinhuanet.com/"},
+    {title:"学习贯彻五中全会精神：外卖骑手成基层治理新力量",source:"新华社",
+     summary:"报道讲述新就业群体参与基层治理的鲜活实践——外卖骑手们在走街串巷中成为社情民意的“探头”和社区治理的新力量，体现共建共治共享理念。",
+     insight:"体现以人民为中心的发展思想和基层治理现代化。可引导学生思考：普通劳动者如何在平凡岗位服务社会、贡献力量。",
+     url:"https://www.xinhuanet.com/"},
+    {title:"习近平向“声援巴勒斯坦人民国际日”纪念大会致贺电",source:"新华社",
+     summary:"11月24日，习近平向纪念大会致贺电指出，巴勒斯坦问题是中东问题的核心，中国始终坚定支持巴勒斯坦人民恢复民族合法权利的正义事业，呼吁国际社会共同推动问题妥善解决。",
+     insight:"从中理解我国独立自主的和平外交政策与大国担当，在纷繁复杂的国际舆论中帮助学生树立正确的世界眼光。",
+     url:"https://www.xinhuanet.com/"}
+  ],
+  economy: [
+    {title:"八大重点任务看落实丨74.8%，内需贡献率怎么看",source:"新华社",
+     summary:"文章解读前三季度内需对经济增长贡献率达到74.8%背后的原因，从消费回暖、投资发力、政策效应等角度分析内需作为经济增长主引擎的作用。",
+     insight:"理解构建新发展格局、实施扩大内需战略的重大意义，把经济发展数据变成课堂上“看得见的国情”。",
+     url:"https://www.xinhuanet.com/"},
+    {title:"《关于发展新质生产力的意见》发布：全面实施“人工智能+”行动",source:"人民网",
+     summary:"《意见》围绕发展新质生产力提出五方面19项重点举措，其中第10项明确“全面实施'人工智能+'行动”。人工智能作为引领新一轮科技革命的战略性技术，正深刻融入经济社会发展各环节。",
+     insight:"新质生产力与理综学科紧密相连——物理、化学、生物、信息科技都是科技创新的基石。引导学生关注科技前沿，就是为发展新质生产力育才。",
+     url:"https://www.people.com.cn/"},
+    {title:"10月份我国工业机器人产量同比增长26%",source:"新华网",
+     summary:"数据显示，10月份我国工业机器人产量同比增长26%，反映制造业智能化、数字化转型加速推进，高端装备制造保持良好增长势头。",
+     insight:"从一个数据看高质量发展。机器人是机械、电子、控制、计算机多学科交叉的产物，是理综知识“落地”的绝佳案例。",
+     url:"https://www.xinhuanet.com/"},
+    {title:"前三季度全国经营主体“提质向新”",source:"人民网",
+     summary:"报道显示前三季度全国经营主体数量质量稳步提升，新产业新业态新模式蓬勃发展，市场活力持续释放，创新驱动发展的特征更加明显。",
+     insight:"理解“两个毫不动摇”和优化营商环境的重要性，感受改革开放持续释放的经济活力。",
+     url:"https://www.people.com.cn/"},
+    {title:"不断做强做优做大数字经济",source:"人民网",
+     summary:"文章论述数字经济已成为稳增长、调结构、惠民生的新动能，强调要夯实数字基础设施，推动数字经济和实体经济深度融合，培育壮大新动能。",
+     insight:"数字素养是新时代党员和教师必备能力，也与信息科技课程直接相关，可引导学生理性认识数据、算法与平台。",
+     url:"https://www.people.com.cn/"},
+    {title:"鸿蒙操作系统终端设备数突破1亿台",source:"新华网",
+     summary:"据报道，鸿蒙操作系统终端设备数已突破1亿台，标志我国在自主可控的操作系统生态建设上迈出重要一步，为智能终端产业注入新动能。",
+     insight:"科技自立自强我们不能只做“跟跑者”。这则新闻可成为信息科技课讲“操作系统与生态”的生动案例。",
+     url:"https://www.xinhuanet.com/"}
+  ],
+  culture: [
+    {title:"文化视点丨沈阳故宫博物院百年守护中华文脉",source:"新华网",
+     summary:"报道讲述沈阳故宫博物院百年间守护、研究和传播中华优秀传统文化的故事，展现博物馆在传承文脉、滋养民族精神中的重要作用。",
+     insight:"坚定文化自信。中华优秀传统文化是中华民族的精神命脉，要把这份自豪感融入育人的点滴之中。",
+     url:"https://www.xinhuanet.com/"},
+    {title:"莆田木雕：刻刀下的现代新表达",source:"新华网",
+     summary:"介绍莆田木雕这一非遗技艺在新时代的创新发展——传统工艺与现代审美、现代生活相结合，焕发新的生机，成为文化产业的亮丽名片。",
+     insight:"非遗的传承与创新，体现“创造性转化、创新性发展”方针，可引导学生用跨学科视角看待传统技艺中的数学与物理之美。",
+     url:"https://www.xinhuanet.com/"},
+    {title:"《伟大的架桥者——斯诺与国际友人在延安》专题展在京开幕",source:"人民网",
+     summary:"专题展通过史料、图片和实物，再现埃德加·斯诺等国际友人冲破封锁、奔赴延安，向世界真实报道中国革命的感人故事。",
+     insight:"铭记历史，理解中国共产党为什么能赢得人心、赢得世界——真相与信仰的力量最动人。",
+     url:"https://www.people.com.cn/"},
+    {title:"新华全媒头条丨中国热带雨林保护的“海南样板”",source:"新华社",
+     summary:"报道海南热带雨林国家公园建设成效，通过生态修复、科学监测和社区共建，生物多样性保护取得显著进展，为全球生态治理提供中国经验。",
+     insight:"习近平生态文明思想的生动实践，“绿水青山就是金山银山”——是生物、地理跨学科教学的鲜活素材。",
+     url:"https://www.xinhuanet.com/"},
+    {title:"新华网评：让文旅“流量”更好成为“留量”",source:"新华网",
+     summary:"评论指出，各地文旅要避免短期流量思维，通过提升服务品质、深挖文化内涵，把游客“流量”转化为可持续发展的“留量”，推动文旅产业高质量发展。",
+     insight:"高质量发展要有长远眼光，不搞急功近利——这种辩证思维同样适用于学生的成长与学习。",
+     url:"https://www.xinhuanet.com/"}
+  ],
+  society: [
+    {title:"《“一老一小”服务体系建设实施方案》发布",source:"人民网",
+     summary:"国家发改委等四部门印发方案，明确到2030年养老托育服务设施布局更加合理，养老机构护理型床位占比达73%，社区养老服务机构覆盖率达70%，3岁以下婴幼儿入托率较2025年提高6个百分点。",
+     insight:"积极应对人口老龄化、完善生育支持政策，体现以人民为中心的发展思想，关乎千家万户的获得感。",
+     url:"https://www.people.com.cn/"},
+    {title:"守护“养老钱”“保命钱”——社保基金新规征求意见",source:"新华社",
+     summary:"社保基金监督条例向社会公开征求意见，旨在加强社保基金监督、防范风险，守护好群众的“养老钱”“保命钱”，多位专家对条例进行了解读。",
+     insight:"完善社会保障体系、增强群众安全感，是共享发展成果的具体体现，也是党员应主动向群众宣讲的民生政策。",
+     url:"https://www.xinhuanet.com/"},
+    {title:"账本晒在阳光下 矛盾解在家门口",source:"人民网",
+     summary:"报道上海杨浦区践行人民城市理念，从老旧小区“明白账”到解决300多艘皮划艇“停船难”，用“绣花功夫”推进精细化治理，把矛盾化解在基层。",
+     insight:"基层治理现代化的生动样本，帮助理解全过程人民民主——人民的事人民商量着办。",
+     url:"https://www.people.com.cn/"},
+    {title:"公安部网安局公布使用AI工具编造传播网络谣言典型案例",source:"人民网",
+     summary:"公安部网安局公布2026年度使用AI工具编造传播网络谣言的10起典型案例，提醒公众依法用网、理性辨别AI生成内容，共同维护清朗网络空间。",
+     insight:"与信息科技、AI教育直接相关——引导学生正确辨识AI生成内容、恪守信息社会责任，做到“不信谣、不传谣”。",
+     url:"https://www.people.com.cn/"},
+    {title:"全国消防宣传月：门窗紧闭围炉暖？勿用“暖和”换危险",source:"新华社",
+     summary:"全国消防宣传月提醒，冬季取暖要注意开窗通风，谨防一氧化碳中毒和火灾事故，普及消防安全知识，守护人民群众生命安全。",
+     insight:"安全无小事。党员要在身边发挥安全宣传的带头作用，也可把消防中的燃烧、热传导知识融入理化课堂。",
+     url:"https://www.xinhuanet.com/"}
+  ],
+  tech: [
+    {title:"神舟二十四号25日发射，乘组确定，“天宫”将迎来首位外籍航天员",source:"新华社 / 人民网",
+     summary:"中国瞄准11月25日08时18分发射神舟二十四号载人飞船，乘组由汤洪波、武毅、穆罕默德·齐尚·阿里组成；“天宫”空间站将迎来首位外籍航天员。此前神二十三航天员朱杨柱正执行一年期在轨驻留试验任务。",
+     insight:"中国航天精神的集中体现——特别能吃苦、特别能战斗、特别能攻关、特别能奉献。可作为物理、地理课堂讲天体运动与太空探索的绝佳素材。",
+     url:"https://www.xinhuanet.com/"},
+    {title:"长征十号运载火箭技术将进行飞行试验验证，揽月着陆器首次飞行任务有序推进",source:"新华社",
+     summary:"我国载人月球探测工程取得新进展：长征十号运载火箭技术将开展飞行试验验证，揽月着陆器首次飞行任务正按计划有序推进。",
+     insight:"从“嫦娥”到“天问”再到载人登月，中国深空探测的每一步都是科技自立自强的生动注脚，能极大激发学生的民族自豪感。",
+     url:"https://www.xinhuanet.com/"},
+    {title:"我国深层页岩油钻井周期刷新纪录",source:"新华网",
+     summary:"我国在深层页岩油勘探开发中刷新钻井周期纪录，标志非常规油气开发技术取得新突破，对保障国家能源安全具有重要意义。",
+     insight:"能源安全是国家安全的重要组成。地质、化学、物理知识在实践中大有用武之地，是“把论文写在祖国大地上”的写照。",
+     url:"https://www.xinhuanet.com/"},
+    {title:"400米大气环境气象梯度观测塔封顶",source:"新华社",
+     summary:"我国400米大气环境气象梯度观测塔顺利封顶，建成后将为大气边界层研究、空气质量监测和气象预报提供重要数据支撑。",
+     insight:"大气科学基础设施是服务生态文明建设的“大国重器”，可作为物理、地理探究大气温度梯度与污染物扩散的真实案例。",
+     url:"https://www.xinhuanet.com/"},
+    {title:"我国海洋天然产物发现量全球第一",source:"人民网",
+     summary:"我国科学家在海洋天然产物研究领域取得系列突破，发现量位居全球第一，为创新药物研发和海洋生物资源开发利用奠定坚实基础。",
+     insight:"海洋是生命的摇篮，也是化学、生物学的前沿阵地。用这样的新闻告诉学生：基础研究大有可为，科研报国正当其时。",
+     url:"https://www.people.com.cn/"},
+    {title:"福建农林大学菌草技术传播至全球118个国家",source:"人民网",
+     summary:"福建农林大学林占熺研究员团队研发的菌草技术，从替代木材栽培食用菌，到应用于生态修复、饲料加工，已传播至全球118个国家，成为农业科技服务全球减贫与可持续发展的生动实践。",
+     insight:"把论文写在祖国大地上，也写在世界人民的需要中——科技报国的典范，生物学教师可深入挖掘其中的生态与民生价值。",
+     url:"https://www.people.com.cn/"},
+    {title:"大模型思维链共享前景几何？AI解题越来越快，科研人才怎样扬长避短",source:"新华网",
+     summary:"随着大模型能力快速提升，“思维链”共享成为研究热点，AI解题能力不断增强。专家探讨科研人才如何与AI协同，把精力投向更具创造性的工作。",
+     insight:"AI时代的教育命题——作为教师，要培养学生“管理AI”、驾驭AI的能力，而不是被AI替代，这正是信息科技与AI通识课的核心使命。",
+     url:"https://www.xinhuanet.com/"}
+  ]
+};
+/* ===NEWS_DATA_END=== */
+
+/* ===QUOTES_START=== */
+var QUOTES = [
+  {t:"为中国人民谋幸福，为中华民族谋复兴。",f:"中国共产党人的初心和使命"},
+  {t:"人民对美好生活的向往，就是我们的奋斗目标。",f:"习近平"},
+  {t:"幸福都是奋斗出来的。",f:"习近平"},
+  {t:"空谈误国，实干兴邦。",f:"习近平"},
+  {t:"打铁必须自身硬。",f:"习近平"},
+  {t:"心中有信仰，脚下有力量。",f:"习近平"},
+  {t:"只要扎实办好自己的事，就一定能不断从胜利走向新的胜利。",f:"习近平"},
+  {t:"为有牺牲多壮志，敢教日月换新天。",f:"毛泽东《七律·到韶山》"},
+  {t:"雄关漫道真如铁，而今迈步从头越。",f:"毛泽东《忆秦娥·娄山关》"},
+  {t:"风物长宜放眼量。",f:"毛泽东《七律·和柳亚子先生》"}
+];
+/* ===QUOTES_END=== */
+
+var SECT = [
+  {key:"politics", name:"政治", el:"list-politics", cnt:"secCountPolitics"},
+  {key:"economy", name:"经济", el:"list-economy", cnt:"secCountEconomy"},
+  {key:"culture", name:"文化", el:"list-culture", cnt:"secCountCulture"},
+  {key:"society", name:"社会", el:"list-society", cnt:"secCountSociety"},
+  {key:"tech", name:"科技", el:"list-tech", cnt:"secCountTech"}
+];
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+function dayOfYear(d){var s=new Date(d.getFullYear(),0,0);return Math.floor((d-s)/86400000);}
+
+function renderHeader(){
+  var now=new Date();
+  var w=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"][now.getDay()];
+  document.getElementById("headerDate").textContent=now.getFullYear()+"年"+(now.getMonth()+1)+"月"+now.getDate()+"日 · "+w;
+  document.getElementById("updateDate").textContent=NEWS_DATA.updateDate;
+}
+
+function newsHTML(item, idx, key){
+  var readKey=key+"_"+idx;
+  var isRead=localStorage.getItem("read_"+readKey)==="1";
+  return '<article class="news '+(isRead?"read":"")+'" id="news-'+readKey+'">'+
+    '<div class="n-top"><span class="n-idx">'+String(idx+1).padStart(2,"0")+'</span>'+
+      '<span class="n-title">'+esc(item.title)+'</span>'+
+      '<span class="n-source">'+esc(item.source)+'</span></div>'+
+    '<div class="n-summary">'+esc(item.summary)+'</div>'+
+    '<div class="n-insight"><b>◆ 学习视角　</b>'+esc(item.insight)+'</div>'+
+    '<div class="n-foot"><a href="'+esc(item.url)+'" target="_blank" rel="noopener">阅读原文 ↗</a>'+
+      '<button class="read-btn '+(isRead?"done":"")+'" id="rb-'+readKey+'" onclick="toggleRead(\''+readKey+'\')">'+(isRead?"已读 ✓":"标记已读")+'</button>'+
+    '</div></article>';
+}
+
+function renderAll(){
+  var total=0;
+  SECT.forEach(function(s){
+    var list=NEWS_DATA[s.key]||[];
+    total+=list.length;
+    document.getElementById(s.el).innerHTML=list.map(function(it,i){return newsHTML(it,i,s.key);}).join("");
+    document.getElementById(s.cnt).textContent=list.length+" 条";
+    var cEl=document.getElementById("cnt"+s.key.charAt(0).toUpperCase()+s.key.slice(1));
+    if(cEl) cEl.textContent=list.length;
+  });
+  document.getElementById("cntAll").textContent=total;
+  document.getElementById("cntPolitics").textContent=(NEWS_DATA.politics||[]).length;
+  document.getElementById("cntEconomy").textContent=(NEWS_DATA.economy||[]).length;
+  document.getElementById("cntCulture").textContent=(NEWS_DATA.culture||[]).length;
+  document.getElementById("cntTech").textContent=(NEWS_DATA.tech||[]).length;
+  updateProgress(total);
+}
+
+function toggleRead(readKey){
+  var v=localStorage.getItem("read_"+readKey)==="1";
+  if(v){localStorage.removeItem("read_"+readKey);}else{localStorage.setItem("read_"+readKey,"1");}
+  var btn=document.getElementById("rb-"+readKey);
+  var card=document.getElementById("news-"+readKey);
+  var nowRead=!v;
+  btn.className="read-btn"+(nowRead?" done":"");
+  btn.textContent=nowRead?"已读 ✓":"标记已读";
+  card.classList.toggle("read",nowRead);
+  var total=SECT.reduce(function(a,s){return a+(NEWS_DATA[s.key]||[]).length;},0);
+  updateProgress(total);
+}
+function updateProgress(total){
+  var done=0;
+  SECT.forEach(function(s){
+    (NEWS_DATA[s.key]||[]).forEach(function(_,i){if(localStorage.getItem("read_"+s.key+"_"+i)==="1")done++;});
+  });
+  document.getElementById("progressText").textContent=done+" / "+total+" 条";
+  document.getElementById("progressFill").style.width=(total?Math.round(done/total*100):0)+"%";
+  if(typeof renderSummary==="function")renderSummary();
+}
+
+/* ===== 今日之所学 ===== */
+function todayKey(){var d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();}
+function getReadItems(){
+  var arr=[];
+  SECT.forEach(function(s){
+    (NEWS_DATA[s.key]||[]).forEach(function(it,i){
+      if(localStorage.getItem("read_"+s.key+"_"+i)==="1")arr.push({cat:s.name,title:it.title,insight:it.insight});
+    });
+  });
+  return arr;
+}
+function renderSummary(){
+  var items=getReadItems();
+  var dateEl=document.getElementById("sumDate");
+  var statsEl=document.getElementById("sumStats");
+  var listEl=document.getElementById("sumList");
+  if(!dateEl||!statsEl||!listEl)return;
+  dateEl.textContent="📅 "+todayKey();
+  if(items.length){
+    var cats=[];items.forEach(function(it){if(cats.indexOf(it.cat)<0)cats.push(it.cat);});
+    statsEl.innerHTML="今日已读 <b>"+items.length+"</b> 条，覆盖板块："+cats.join("、")+"。以下自动生成复习清单——";
+    listEl.innerHTML=items.map(function(it){
+      return '<div class="sum-item"><b>【'+esc(it.cat)+'】'+esc(it.title)+'</b>'+
+        '<div class="si-insight">'+esc(it.insight)+'</div></div>';
+    }).join("");
+  }else{
+    statsEl.textContent="今天还没有标记已读的条目。先到上方阅读要闻并点「标记已读」，这里会自动生成今日复习清单。";
+    listEl.innerHTML="";
+  }
+  var saved=localStorage.getItem("daySummary_"+todayKey())||"";
+  var input=document.getElementById("sumInput");
+  if(input&&!input.value)input.value=saved;
+  var savedEl=document.getElementById("sumSaved");
+  if(savedEl)savedEl.textContent=saved?"✓ 今日总结已保存（"+todayKey()+"）":"";
+}
+function saveSummary(){
+  var v=document.getElementById("sumInput").value.trim();
+  if(!v){showToast("请先写下今日所学");return;}
+  localStorage.setItem("daySummary_"+todayKey(),v);
+  document.getElementById("sumSaved").textContent="✓ 今日总结已保存（"+todayKey()+"）";
+  showToast("今日总结已保存");
+}
+function buildSummaryText(){
+  var items=getReadItems();
+  var saved=localStorage.getItem("daySummary_"+todayKey())||"（未填写）";
+  var lines=["【今日之所学 · "+todayKey()+"】",""];
+  if(items.length){
+    lines.push("已读要闻 "+items.length+" 条：");
+    items.forEach(function(it){lines.push("· 【"+it.cat+"】"+it.title);});
+    lines.push("");
+  }
+  lines.push("我的总结："+saved);
+  return lines.join("\n");
+}
+function copySummary(){
+  var text=buildSummaryText();
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){showToast("今日总结已复制，可粘贴到备忘录或工作群");},
+      function(){fallbackCopy(text);});
+  }else{fallbackCopy(text);}
+}
+function fallbackCopy(text){
+  var ta=document.createElement("textarea");ta.value=text;
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand("copy");showToast("今日总结已复制");}catch(e){showToast("复制失败，请手动选择文本复制");}
+  document.body.removeChild(ta);
+}
+function toggleHistory(){
+  var box=document.getElementById("sumHistory");
+  if(box.style.display==="none"){
+    var keys=[];
+    for(var i=0;i<localStorage.length;i++){
+      var k=localStorage.key(i);
+      if(k&&k.indexOf("daySummary_")===0)keys.push(k.slice(11));
+    }
+    keys.sort().reverse();
+    if(!keys.length){box.innerHTML='<div class="sum-empty">还没有历史总结，写完今天的总结就会出现在这里。</div>';}
+    else{
+      box.innerHTML=keys.map(function(d){
+        return '<div class="sum-hist-item"><div class="shd">'+esc(d)+'</div>'+esc(localStorage.getItem("daySummary_"+d)||"")+'</div>';
+      }).join("");
+    }
+    box.style.display="block";
+    document.querySelector(".sum-btn.ghost").textContent="收起历史 ▴";
+  }else{
+    box.style.display="none";
+    document.querySelector(".sum-btn.ghost").textContent="历史总结 ▾";
+  }
+}
+
+function renderQuote(){
+  var q=QUOTES[dayOfYear(new Date())%QUOTES.length];
+  document.getElementById("quoteText").textContent=q.t;
+  document.getElementById("quoteFrom").textContent="—— "+q.f;
+}
+
+function loadNotes(){
+  var notes=JSON.parse(localStorage.getItem("dailyNewsNotes")||"[]");
+  var box=document.getElementById("notesList");
+  if(!notes.length){box.innerHTML="";return;}
+  box.innerHTML=notes.map(function(n){
+    return '<div class="note-item"><button class="note-del" onclick="delNote(\''+n.id+'\')">×</button>'+
+      '<div class="nd">'+esc(n.date)+'</div><div class="nt">'+esc(n.text)+'</div></div>';
+  }).join("");
+}
+function saveNote(){
+  var v=document.getElementById("noteInput").value.trim();
+  if(!v){showToast("请先写下学习体会");return;}
+  var notes=JSON.parse(localStorage.getItem("dailyNewsNotes")||"[]");
+  var now=new Date();
+  notes.unshift({id:Date.now(),text:v,
+    date:now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate()+" "+now.getHours()+":"+String(now.getMinutes()).padStart(2,"0")});
+  localStorage.setItem("dailyNewsNotes",JSON.stringify(notes));
+  document.getElementById("noteInput").value="";
+  loadNotes();showToast("学习心得已保存");
+}
+function delNote(id){
+  var notes=JSON.parse(localStorage.getItem("dailyNewsNotes")||"[]").filter(function(n){return String(n.id)!==String(id);});
+  localStorage.setItem("dailyNewsNotes",JSON.stringify(notes));
+  loadNotes();showToast("已删除");
+}
+var toastTimer;
+function showToast(msg){
+  var t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");
+  clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove("show");},2200);
+}
+
+renderHeader();
+renderAll();
+renderQuote();
+loadNotes();
+</script>
+</body>
+</html>
